@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <component :is="layout">
+      <router-view />
+    </component>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+// import { getmodule } from '@/api/getdata.js'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      layout: 'layout-default'
+    }
+  },
+  watch: {
+    $route(to) {
+      if (to.meta.layout) {
+        this.layout = 'layout-tab'
+      } else {
+        this.layout = 'layout-default'
+      }
+    }
+  },
+  async mounted() {
+    // const res = await getmodule()
+    // console.log(res)
   }
+
 }
 </script>
 
 <style lang='scss'>
-@import '@/assets/reset.scss';
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import '@/assets/style/reset.scss';
+@import '@/assets/style/common.scss';
+@import '@/assets/style/page/login.scss';
+#app{
+  margin: 0 auto;
+  width: 500px;
 }
 </style>
